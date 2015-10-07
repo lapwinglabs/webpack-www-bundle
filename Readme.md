@@ -1,6 +1,6 @@
 # webpack-www-bundle
 
-Our asset pipeline for [https://finbox.io]. This module picks up
+Our asset pipeline for [finbox.io](https://finbox.io). This module picks up
 where [www-bundle](https://github.com/lapwinglabs/www-bundle) leaves off. We recently ran into a wall using React, where our Javascript was 800kb minified, cause our site to take around 3 seconds to load.
 
 We needed asynchronous loading to bring the initial payload down but it's nearly impossible to do that with Browserify, while not including the same module multiple times. I explored external modules as well as factor bundle, but they are just not precise enough tools.
