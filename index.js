@@ -120,6 +120,7 @@ module.exports = function config (root, config) {
   var plugins = [
     new webpack.PrefetchPlugin("react"),
     new webpack.PrefetchPlugin("react/lib/ReactComponentBrowserEnvironment"),
+    new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -129,12 +130,6 @@ module.exports = function config (root, config) {
 
   if (production) {
     plugins.push(new ExtractTextPlugin("/pages/[name]/index.css"))
-    plugins.push(new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': '"production"'
-      }
-    }))
-
     plugins.push(new webpack.optimize.UglifyJsPlugin({
       test: /\.jsx?$/
     }))
@@ -168,6 +163,7 @@ module.exports = function config (root, config) {
       url({
         url: function(url, decl, from, dirname, to, options) {
           if (http(url)) return url;
+          url = url.split(/[?#]/)[0];
           return './' + relative(from, join(dirname, url));
         }
       }),
@@ -178,16 +174,26 @@ module.exports = function config (root, config) {
   config = deep_assign({
     devtool: production ? null : 'eval',
     resolve: {
-      root: join(root, 'lib')
+      root: join(root, 'lib'),
+      extensions: ['', '.js', '.jsx', '.css']
     },
     postcss: postcss,
     entry: {},
     output: {
       path: join(root, 'dist'),
-      filename: 'pages/[name]/index.jsx',
+      filename: 'pages/[name]/[name].jsx',
+      publicPath: '/'
     },
     module: {
-      loaders: loaders
+      loaders: loaders,
+      postLoaders: [
+        {
+          loader: 'transform?envify'
+        }
+      ]
+    },
+    resolveLoader: {
+      root: join(__dirname, 'node_modules')
     },
     plugins: plugins
   }, config)

@@ -9,6 +9,7 @@ var React = require('react')
  */
 
 var styles = require('./index.css')
+var template = require('./template.html')
 
 /**
  * Home Component
@@ -32,7 +33,7 @@ export default class Home extends React.Component {
 
   render () {
     return (
-      <div className={styles.main}>Hello from Home {this.state.counter}!!</div>
+      <div className={styles.main}>Hello from Home {this.state.counter}!! {template}</div>
     )
   }
 }

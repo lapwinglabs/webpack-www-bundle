@@ -1,10 +1,14 @@
+@import 'normalize.css';
+@import 'theme-default';
+@import 'font-awesome';
+
 * {
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-$font-main: "Comic Sans";
+$font-main: "Benton";
 
 html {
   clear: fix;

@@ -12,7 +12,8 @@ var config = require('../')(__dirname, {
     dashboard: join(__dirname, 'pages', 'dashboard', 'index.jsx')
   },
   output: {
-    path: join(__dirname, 'dist')
+    path: join(__dirname, 'dist'),
+    filename: join('pages', '[name]', 'index.jsx')
   }
 });
 var compiler = webpack(config);

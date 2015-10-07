@@ -1,0 +1,56 @@
+@import 'font-awesome';
+
+/**
+ * Background Colors
+ */
+
+$background: #FFF;
+
+/**
+ * Fonts
+ */
+
+$font-main: 'Comic Sans';
+$font-icon: 'FontAwesome';
+
+/**
+ * Colors
+ */
+
+$white: #FAFAFA;
+$cream: #F9FCFF;
+$black: #4C4C35;
+
+$lighter-gray: #F5F5F5;
+$light-gray: #D8DAE0;
+$gray: #6D6D6D;
+$dark-gray: #4C4C35;
+$darker-gray: #151515;
+$gray-blue: #A0BDC7;
+
+$lighter-blue: #EEF3FA;
+$light-blue: #C7D7EE;
+$blue: #4299FF;
+$dark-blue: #2689FB;
+$darker-blue: #034FA7;
+
+$light-facebook: #97A7C8;
+$facebook: #3B5998;
+$dark-facebook: #2D4473;
+$light-google: #EAA096;
+$google: #DD4B39;
+$dark-google: #C23321;
+$light-linkedin: #00A4F9;
+$linkedin: #0077B5;
+$dark-linkedin: #004A71;
+$light-twitter: #A3D5F5;
+$twitter: #56B4EF;
+$dark-twitter: #1898e9;
+
+$red: #FF6447;
+$dark-red: #E8554D;
+
+$light-green: #24db80;
+$green: #20BD6F;
+$dark-green: #1ba05e;
+$darker-green: #1ba05e;

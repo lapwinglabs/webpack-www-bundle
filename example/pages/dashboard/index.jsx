@@ -7,6 +7,9 @@ var DOM = require('react-dom')
 var React = require('react')
 var base = require('base')
 console.log(styles);
+
+var environment = process.env.NODE_ENV
+
 /**
  * Dashboard Component
  */
@@ -32,7 +35,7 @@ export default class Dashboard extends React.Component {
     var Component = this.state.Component
     return (
       <div className="base">
-        <div className='header'>Hola from dashboard!!!!!!!!!!</div>
+        <div className='header'>Hola from dashboard!!!!!!!!!! we're running in the {environment} environment</div>
         <div className='content'>lorem ipsum</div>
         {Component ? <Component/> : <div></div>}
       </div>

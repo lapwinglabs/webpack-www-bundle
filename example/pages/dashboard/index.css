@@ -9,7 +9,7 @@
 }
 
 .content {
-  font-family: $font-main;
+  font-family: $font-main, 'Helvetica';
   color: green;
   font-weight: bold;
 }
