@@ -1,6 +1,6 @@
 {
   "name": "webpack-www-bundle",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "dependencies": {
     "babel-core": "5.8.25",
