@@ -11,13 +11,13 @@ That being said, I did spent quite a bit of time tweaking things to make the env
 
 ## Features
 
+- Automatic combining of common code (via `/common.js`)
 - It's middleware so you don't need to run two servers
 - Javascript, CSS, HTML, JSON, and markdown support
-- Automatic combining of common code (`/common.js`)
 - Lives outside of your main app (it's a module)
 - Local CSS module support (via `.style` files)
 - Automatic inlining of CSS assets under 10kb
-- PostCSS with CSSnext and built in
+- PostCSS with CSSnext built in
 - Asynchronous module loading
 - ES6 support via Babel
 - Local CSS Modules
