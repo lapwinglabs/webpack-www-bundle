@@ -54,7 +54,7 @@ var config = require('webpack-www-bundle')(root, {
 module.exports = webpack(config)
 ```
 
-Here's the server middleware you'll need to get webpack-www-bundle working. You'll need to install `koa-webpack-dev-middleware` and `koa-webpack-hot-middleware` if you're using koa with hot-reloading:
+Here's the server middleware you'll need to get this module working. You'll need to install `koa-webpack-dev-middleware` and `koa-webpack-hot-middleware` if you're using koa with hot-reloading:
 
 **server.js**
 
