@@ -39,13 +39,14 @@ and mostly depends on your entry points and how you want to structure the app.
 ```js
 var webpack = require('webpack')
 var join = require('path').join
+var root = join(__dirname, '..', '..')
 
-var config = require('webpack-www-bundle')(join(__dirname, '..', '..'), {
+var config = require('webpack-www-bundle')(root, {
   entry: {
-    dashboard: join(__dirname, '..', '..', 'pages', 'dashboard', 'dashboard.jsx')
+    dashboard: join(root, 'pages', 'dashboard', 'dashboard.jsx')
   },
   output: {
-    path: join(__dirname, '..', '..', 'dist'),
+    path: join(root, 'dist'),
     filename: join('pages', '[name]', '[name].jsx')
   }
 })
