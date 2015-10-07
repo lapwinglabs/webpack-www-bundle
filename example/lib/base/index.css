@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+$font-main: "Comic Sans";
+
+html {
+  clear: fix;
+  height: 100%;
+  width: 100%;
+  background: blue;
+}
+
+body {
+  background: url('./logo.png');
+  font-family: $font-main, Helvetica, sans-serif;
+  height: 100%;
+  width: 100%;
+  transition: opacity 100ms linear;
+}
+
+.h2 {
+  background: red;
+}

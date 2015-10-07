@@ -1,0 +1,226 @@
+/**
+ * Module Dependencies
+ */
+
+var webpack = require("webpack");
+var join = require("path").join;
+var relative = require('path').relative;
+
+/**
+ * Plugins
+ */
+
+var production = process.env.NODE_ENV == 'production'
+var NODE_PATH = process.env.NODE_PATH
+
+
+/**
+ * Configuration
+ */
+
+var cssimport = require('postcss-import')
+var vars = require('postcss-simple-vars')
+var fontpath = require('postcss-fontpath')
+var clearfix = require('postcss-clearfix')
+var extend = require('postcss-simple-extend')
+var deep_assign = require('deep-assign')
+var nested = require('postcss-nested')
+var cssnext = require('cssnext')
+var url = require('postcss-url')
+
+/**
+ * Loaders
+ */
+
+var ReactTransformCatchErrors = require('react-transform-catch-errors')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var ReactTransform = require('babel-plugin-react-transform')
+var ReactTransformHMR = require('react-transform-hmr')
+var HotMiddleware = require('webpack-hot-middleware')
+var webpackNanoLogs = require('webpack-nano-logs')
+var TransformLoader = require('transform-loader')
+var MarkdownLoader = require('markdown-loader')
+var failPlugin = require('webpack-fail-plugin')
+var RedboxReact = require('redbox-react')
+var PostCSSLoader = require('postcss-loader')
+var BabelLoader = require('babel-loader')
+var Styleloader = require('style-loader')
+var CSSLoader = require('css-loader')
+var JSONLoader = require('json-loader')
+var URLLoader = require('url-loader')
+var FileLoader = require('file-loader')
+var HTMLLoader = require('html-loader')
+var envify = require('envify')
+var React = require('react')
+var _node_path;
+
+if (!production) {
+  var css = 'style-loader!css-loader!postcss-loader'
+} else {
+  var css = ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader', {
+    publicPath: '/'
+  })
+}
+
+if (!production) {
+  var style = 'style-loader!css-loader?module&localIdentName=[path][name]---[local]---[hash:base64:5]!postcss-loader'
+} else {
+  var style = ExtractTextPlugin.extract('style-loader', 'css-loader?module!postcss-loader', {
+    publicPath: '/'
+  })
+}
+
+module.exports = function config (root, config) {
+  config = config || {}
+
+  var loaders = [
+    {
+      test: /\.jsx?$/,
+      loader: 'babel',
+      include: [join(root, 'pages'), join(root, 'lib')]
+    },
+    {
+      test: /\.css$/,
+      loader: css
+    },
+    {
+      test: /\.style$/,
+      loader: style
+    },
+    {
+      test: /\.json$/,
+      loader: 'json-loader'
+    },
+    {
+      test: /\.(png|jpg|jpeg|gif|svg)$/,
+      loader: 'url-loader?limit=100000'
+    },
+    {
+      test: /\.(woff|woff2)/,
+      loader: 'url-loader?limit=100000'
+    },
+    {
+      test: /\.(ttf|eot)$/,
+      loader: 'file-loader'
+    },
+    {
+      test: /\.html$/,
+      loader: 'html'
+    },
+    {
+      test: /\.(md|markdown)$/,
+      loader: 'html!markdown'
+    }
+  ]
+
+  /**
+   * Plugins
+   */
+
+  var plugins = [
+    new webpack.PrefetchPlugin("react"),
+    new webpack.PrefetchPlugin("react/lib/ReactComponentBrowserEnvironment"),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    webpackNanoLogs,
+    failPlugin
+  ]
+
+  if (production) {
+    plugins.push(new ExtractTextPlugin("/pages/[name]/index.css"))
+    plugins.push(new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"production"'
+      }
+    }))
+
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+      test: /\.jsx?$/
+    }))
+  }
+
+  function inc(script) {
+    var out = [];
+    !production && out.push('webpack-hot-middleware/client?noInfo=true&reload=true')
+    out.push(script)
+    return out
+  }
+
+  function postcss () {
+    var np = node_path(root)
+    return [
+      cssimport({
+        path: np ? np : [],
+        glob: true,
+        root: root,
+        onImport: function (files) {
+          files.forEach(function(file) {
+            this.addDependency(file)
+          }, this)
+        }.bind(this)
+      }),
+      nested(),
+      vars(),
+      extend(),
+      clearfix(),
+      fontpath(),
+      url({
+        url: function(url, decl, from, dirname, to, options) {
+          if (http(url)) return url;
+          return './' + relative(from, join(dirname, url));
+        }
+      }),
+      cssnext({ import: false, url: false })
+    ]
+  }
+
+  config = deep_assign({
+    devtool: production ? null : 'eval',
+    resolve: {
+      root: join(root, 'lib')
+    },
+    postcss: postcss,
+    entry: {},
+    output: {
+      path: join(root, 'dist'),
+      filename: 'pages/[name]/index.jsx',
+    },
+    module: {
+      loaders: loaders
+    },
+    plugins: plugins
+  }, config)
+
+  // load in the hot module stuff
+  for (var entry in config.entry) {
+    config.entry[entry] = inc(config.entry[entry])
+  }
+
+  return config
+}
+
+
+/**
+ * Lazily load the node_path
+ */
+
+function node_path(root) {
+  return _node_path
+    || (_node_path = NODE_PATH && join(root, NODE_PATH))
+}
+
+/**
+ * Check if `url` is an HTTP URL.
+ *
+ * @param {String} path
+ * @param {Boolean}
+ * @api private
+ */
+
+function http(url) {
+  return url.slice(0, 4) === 'http'
+    || url.slice(0, 3) === '://'
+    || false;
+}
+

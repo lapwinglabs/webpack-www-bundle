@@ -1,0 +1,8 @@
+extend /lib/base/index.jade
+
+append scripts
+  script(src='/pages/home/index.jsx')
+
+append styles
+  if (production)
+    link(href='/pages/home/index.css', rel='stylesheet')

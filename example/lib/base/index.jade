@@ -1,0 +1,61 @@
+- title = title || 'finbox.io'
+- description= description || 'finbox.io is trusted by thousands of investors to discover and validate investment ideas using valuation models and charts. Invest confidently in the stocks you understand.'
+
+doctype html
+html
+  head
+    title= title
+
+    //- Meta
+    meta(name='description' content=description)
+    meta(http-equiv='X-UA-Compatible' content='IE=edge,chrome=1')
+    meta(name='viewport' content='width=1200')
+
+    //- OG
+    meta(property='og:title' content= title)
+    meta(property='og:website' content='website')
+    meta(property='og:url' content= process.env.URL)
+    meta(property='og:description' content= description)
+    meta(property='image/png' content='og:image:type')
+    meta(property='og:image:width' content='1200')
+    meta(property='og:image:height' content='630')
+    meta(property='og:image' content='/branding/thumbnail.png')
+
+    //- Fix the viewport
+    meta(name='viewport' content='width=1100')
+
+    //--- Favicon Madness
+
+    //- Normal
+    link(ref='shortcut icon' type='image/ico' href='/favicon.ico?v=4')
+    //- Touch icon for iOS 2.0+ and Android 2.1+:
+    link(link rel='apple-touch-icon-precomposed' href='/branding/favicon-152.png')
+    //-IE 10 Metro tile icon (Metro equivalent of apple-touch-icon):
+    meta(name='msapplication-TileColor' content='#FFFFFF')
+    meta(name='msapplication-TileImage' content='/branding/favicon-144.png')
+    //- For iPad with high-resolution Retina display running iOS ≥ 7:
+    link(rel='apple-touch-icon-precomposed' sizes='152x152' href='/branding/favicon-152.png')
+    //- For iPad with high-resolution Retina display running iOS ≤ 6:
+    link(link rel='apple-touch-icon-precomposed' sizes='144x144' href='/branding/favicon-144.png')
+    //- For iPhone with high-resolution Retina display running iOS ≥ 7
+    link(rel='apple-touch-icon-precomposed' sizes='120x120' href='/branding/favicon-120.png')
+    //- For iPhone with high-resolution Retina display running iOS ≥ 7
+    link(rel='apple-touch-icon-precomposed' sizes='114x114' href='/branding/favicon-114.png')
+    //- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices:
+    link(link rel='apple-touch-icon-precomposed' href='/branding/favicon-57.png')
+
+    //- Verification for Google Webmaster
+    meta(name="google-site-verification" content="gjGSN5ILS28g311hgDfP9mXY0KSxIJY7yO_YQGgmtug")
+
+    link(rel='canonical' href='https://app.finbox.io')
+    block meta
+    block styles
+
+  body
+    #base
+      block content
+
+    //- Pass states to React Components
+    script#state(type='x-state')!= JSON.stringify(data || {})
+
+    block scripts
