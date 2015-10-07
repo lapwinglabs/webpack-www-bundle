@@ -5,6 +5,7 @@
 var webpack = require("webpack");
 var join = require("path").join;
 var relative = require('path').relative;
+var log_update = require('log-update');
 
 /**
  * Plugins
@@ -117,6 +118,14 @@ module.exports = function config (root, config) {
   ]
 
   /**
+   * On progress
+   */
+
+  function on_progress (progress, message) {
+    log_update('\n  < webpack >  ' + Math.round(progress * 100) + '%  :  ' + (message || 'done') + '\n')
+  }
+
+  /**
    * Plugins
    */
 
@@ -124,6 +133,7 @@ module.exports = function config (root, config) {
     new webpack.PrefetchPlugin("react"),
     new webpack.PrefetchPlugin("react/lib/ReactComponentBrowserEnvironment"),
     new webpack.optimize.CommonsChunkPlugin('common.js'),
+    new webpack.ProgressPlugin(on_progress),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -132,7 +142,7 @@ module.exports = function config (root, config) {
   ]
 
   if (production) {
-    plugins.push(new ExtractTextPlugin("/pages/[name]/index.css"))
+    plugins.push(new ExtractTextPlugin("/pages/[name]/[name].css"))
     plugins.push(new webpack.optimize.UglifyJsPlugin({
       test: /\.jsx?$/
     }))

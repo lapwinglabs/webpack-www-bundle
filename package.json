@@ -16,6 +16,7 @@
     "json-loader": "0.5.3",
     "koa-webpack-dev-middleware": "1.0.1",
     "koa-webpack-hot-middleware": "1.0.1",
+    "log-update": "^1.0.2",
     "markdown-loader": "0.1.7",
     "postcss-clearfix": "0.2.0",
     "postcss-fontpath": "0.2.0",
