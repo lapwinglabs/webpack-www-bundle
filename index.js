@@ -77,7 +77,10 @@ module.exports = function config (root, config) {
     {
       test: /\.jsx?$/,
       loader: 'babel',
-      include: [join(root, 'pages'), join(root, 'lib')]
+      include: [join(root, 'pages'), join(root, 'lib')],
+      query: {
+        cacheDirectory: true
+      }
     },
     {
       test: /\.css$/,
@@ -192,6 +195,7 @@ module.exports = function config (root, config) {
         }
       ]
     },
+    watch: production ? false : true,
     resolveLoader: {
       root: join(__dirname, 'node_modules')
     },
