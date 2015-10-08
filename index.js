@@ -39,7 +39,6 @@ var ReactTransform = require('babel-plugin-react-transform')
 var ReactTransformHMR = require('react-transform-hmr')
 var HotMiddleware = require('webpack-hot-middleware')
 var webpackNanoLogs = require('webpack-nano-logs')
-var TransformLoader = require('transform-loader')
 var MarkdownLoader = require('markdown-loader')
 var failPlugin = require('webpack-fail-plugin')
 var RedboxReact = require('redbox-react')
@@ -51,7 +50,6 @@ var JSONLoader = require('json-loader')
 var URLLoader = require('url-loader')
 var FileLoader = require('file-loader')
 var HTMLLoader = require('html-loader')
-var envify = require('envify')
 var React = require('react')
 var _node_path;
 
@@ -118,14 +116,6 @@ module.exports = function config (root, config) {
   ]
 
   /**
-   * On progress
-   */
-
-  function on_progress (progress, message) {
-    log_update('\n  < webpack >  ' + Math.round(progress * 100) + '%  :  ' + (message || 'done') + '\n')
-  }
-
-  /**
    * Plugins
    */
 
@@ -133,10 +123,15 @@ module.exports = function config (root, config) {
     new webpack.PrefetchPlugin("react"),
     new webpack.PrefetchPlugin("react/lib/ReactComponentBrowserEnvironment"),
     new webpack.optimize.CommonsChunkPlugin('common.js'),
-    new webpack.ProgressPlugin(on_progress),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': Object.keys(process.env).reduce(function(o, k) {
+        o[k] = JSON.stringify(process.env[k]);
+        return o;
+      }, {})
+    }),
     webpackNanoLogs,
     failPlugin
   ]
@@ -188,7 +183,7 @@ module.exports = function config (root, config) {
     devtool: production ? null : 'eval',
     resolve: {
       root: join(root, 'lib'),
-      extensions: ['', '.js', '.jsx', '.css']
+      extensions: ['', '.js', '.jsx']
     },
     postcss: postcss,
     entry: {},
@@ -198,13 +193,9 @@ module.exports = function config (root, config) {
       publicPath: '/'
     },
     module: {
-      loaders: loaders,
-      postLoaders: [
-        {
-          loader: 'transform?envify'
-        }
-      ]
+      loaders: loaders
     },
+    cache: {},
     watch: production ? false : true,
     resolveLoader: {
       root: join(__dirname, 'node_modules')
