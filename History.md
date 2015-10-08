@@ -1,4 +1,9 @@
 
+1.0.5 / 2015-10-08
+==================
+
+  * add progress back in for production builds and remove uglify warnings
+
 1.0.4 / 2015-10-07
 ==================
 
