@@ -72,6 +72,10 @@ if (!production) {
 module.exports = function config (root, config) {
   config = config || {}
 
+  var minify = config.minify === undefined
+    ? production
+    : config.minify
+
   var loaders = [
     {
       test: /\.jsx?$/,
@@ -96,11 +100,11 @@ module.exports = function config (root, config) {
     },
     {
       test: /\.(png|jpg|jpeg|gif|svg)$/,
-      loader: 'url-loader?limit=100000'
+      loader: 'url-loader?limit=10000'
     },
     {
       test: /\.(woff|woff2)/,
-      loader: 'url-loader?limit=100000'
+      loader: 'url-loader?limit=10000'
     },
     {
       test: /\.(ttf|eot)$/,
@@ -141,6 +145,9 @@ module.exports = function config (root, config) {
     plugins.push(new webpack.ProgressPlugin(on_progress))
     plugins.push(new webpack.optimize.DedupePlugin())
     plugins.push(new ExtractTextPlugin("/pages/[name]/[name].css"))
+  }
+
+  if (minify) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
       test: /\.jsx?$/,
       compress: {
