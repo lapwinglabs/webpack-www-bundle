@@ -213,7 +213,11 @@ module.exports = function config (root, config) {
     resolveLoader: {
       root: join(__dirname, 'node_modules')
     },
-    plugins: plugins
+    plugins: plugins,
+    node: {
+      __dirname: true,
+      __filename: true
+    }
   }, config)
 
   // load in the hot module stuff
