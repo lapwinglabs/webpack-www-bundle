@@ -5,6 +5,7 @@
 var webpack = require("webpack");
 var join = require("path").join;
 var relative = require('path').relative;
+var log_update = require('log-update');
 
 /**
  * Plugins
@@ -137,9 +138,14 @@ module.exports = function config (root, config) {
   ]
 
   if (production) {
+    plugins.push(new webpack.ProgressPlugin(on_progress))
+    plugins.push(new webpack.optimize.DedupePlugin())
     plugins.push(new ExtractTextPlugin("/pages/[name]/[name].css"))
     plugins.push(new webpack.optimize.UglifyJsPlugin({
-      test: /\.jsx?$/
+      test: /\.jsx?$/,
+      compress: {
+        warnings: false
+      }
     }))
   }
 
@@ -211,6 +217,13 @@ module.exports = function config (root, config) {
   return config
 }
 
+ /**
+  * On progress
+  */
+
+ function on_progress (progress, message) {
+   log_update('\n  < webpack >  ' + Math.round(progress * 100) + '%  :  ' + (message || 'done') + '\n')
+ }
 
 /**
  * Lazily load the node_path
