@@ -5,7 +5,6 @@
 var webpack = require("webpack");
 var join = require("path").join;
 var relative = require('path').relative;
-var log_update = require('log-update');
 
 /**
  * Plugins
