@@ -1,4 +1,10 @@
 
+1.0.4 / 2015-10-07
+==================
+
+  * more build optimizations (replace cssnext with autoprefixer, limit search space of css)
+  * bump react to 0.14.0
+
 1.0.3 / 2015-10-07
 ==================
 
