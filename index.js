@@ -23,9 +23,9 @@ var vars = require('postcss-simple-vars')
 var fontpath = require('postcss-fontpath')
 var clearfix = require('postcss-clearfix')
 var extend = require('postcss-simple-extend')
+var autoprefixer = require('autoprefixer')
 var deep_assign = require('deep-assign')
 var nested = require('postcss-nested')
-var cssnext = require('cssnext')
 var url = require('postcss-url')
 
 /**
@@ -82,6 +82,7 @@ module.exports = function config (root, config) {
     },
     {
       test: /\.css$/,
+      include: [join(root, 'pages'), join(root, 'lib')],
       loader: css
     },
     {
@@ -174,7 +175,7 @@ module.exports = function config (root, config) {
           return './' + relative(from, join(dirname, url));
         }
       }),
-      cssnext({ import: false, url: false })
+      autoprefixer({ remove: production ? true : false, browsers: ['last 2 versions'] })
     ]
   }
 
