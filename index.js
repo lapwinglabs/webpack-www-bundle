@@ -196,7 +196,7 @@ module.exports = function config (root, config) {
     devtool: production ? null : 'eval',
     resolve: {
       root: join(root, 'lib'),
-      extensions: ['', '.js', '.jsx']
+      extensions: ['', '.js', '.jsx', '.json']
     },
     postcss: postcss,
     entry: {},
