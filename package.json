@@ -25,7 +25,7 @@
     "postcss-simple-extend": "1.0.0",
     "postcss-simple-vars": "1.0.1",
     "postcss-url": "5.0.1",
-    "react": "0.14.0-rc1",
+    "react": "0.14.0",
     "react-tools": "0.10.0",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",
@@ -44,7 +44,7 @@
     "koa-webpack-hot-middleware": "1.0.1",
     "node-dev": "2.7.1",
     "normalize.css": "3.0.3",
-    "react-dom": "0.14.0-rc1",
+    "react-dom": "0.14.0",
     "roo": "0.4.5"
   }
 }
